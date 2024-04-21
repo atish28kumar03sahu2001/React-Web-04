@@ -1,0 +1,30 @@
+.LHD{
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid white;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 18px;
+    text-wrap: wrap;
+}
+.LIST{
+    border: 2px solid white;
+    margin: 10px;
+    height: 500px;
+    overflow: scroll;
+}
+.LL{
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+@media screen and (width <= 375px) {
+    .LHD{
+        width: 80vw;
+        font-size: 16px;
+    }
+}

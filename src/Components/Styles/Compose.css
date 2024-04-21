@@ -1,0 +1,44 @@
+.CMP-DIV{
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 10px;
+}
+.MAIL-FRM{
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+.Editor{
+    margin: 5px;
+    height: 350px;
+}
+.Editor .ql-toolbar{
+    background-color: white;
+}
+.IPE{
+    margin: 5px;
+    padding: 10px;
+    outline: none;
+}
+.SUB{
+    margin: 90px 5px 5px 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+.SBTN{
+    outline: none;
+    border: 2px solid white;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    color: white;
+    background-color: rgb(0, 56, 0);
+    border-radius: 20px;
+}
+@media screen and (width <= 376px) {
+    .SUB{
+        margin: 150px 5px 5px 5px;
+    }
+} 
