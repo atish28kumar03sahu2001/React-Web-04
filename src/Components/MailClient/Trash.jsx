@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getDatabase, ref, onValue, remove } from "firebase/database";
 
 const removeHTMLTags = (str) => {
@@ -42,7 +44,10 @@ const Trash = () => {
                             <p>From: {message.from}</p>
                             <p>Subject: {message.subject}</p>
                             <p>Message: {removeHTMLTags(message.emailtext)}</p>
-                            <button onClick={() => handleDelete(message.id)}>Delete</button>
+                            <button onClick={() => handleDelete(message.id)} className="BTN DELB">
+                                <FontAwesomeIcon icon={faTrashCan} size="sm" style={{ color: "#ffffff", }} />
+                                <p>Delete</p>
+                            </button>
                         </div>
                     ))}
                 </div>

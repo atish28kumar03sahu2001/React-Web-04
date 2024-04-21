@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { getDatabase, ref, onValue, push, remove, get } from "firebase/database";
 import "../Styles/Inbox.css";
 
@@ -13,7 +15,7 @@ const Inbox = () => {
     useEffect(() => {
         const db = getDatabase();
         const inboxRef = ref(db, `MailClient/${useremail.replace('.', '')}/ReceiveBox`);
-    
+
         onValue(inboxRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -27,10 +29,10 @@ const Inbox = () => {
         const db = getDatabase();
         const useremailRef = useremail.replace('.', '');
         const starRef = ref(db, `MailClient/${useremailRef}/StarMessages`);
-    
+
         const snapshot = await get(starRef);
         const data = snapshot.val();
-    
+
         if (data) {
             const keys = Object.keys(data);
             const isMessageInStarred = keys.some((key) => {
@@ -41,25 +43,25 @@ const Inbox = () => {
                     message.emailtext === MSG.emailtext
                 );
             });
-    
+
             if (isMessageInStarred) {
                 alert("This message is already in the Star Section");
                 return;
             }
         }
-    
+
         push(starRef, MSG);
     };
-    
-    
+
+
     const TrashMessage = (MSG) => {
         const db = getDatabase();
         const useremailRef = useremail.replace('.', '');
         const trashRef = ref(db, `MailClient/${useremailRef}/Trash`);
-    
+
         // Push the message to the Trash
         push(trashRef, MSG);
-    
+
         // Remove the message from ReceiveBox
         const inboxRef = ref(db, `MailClient/${useremailRef}/ReceiveBox`);
         onValue(inboxRef, (snapshot) => {
@@ -70,12 +72,16 @@ const Inbox = () => {
                     const message = data[key];
                     if (message.from === MSG.from && message.subject === MSG.subject && message.emailtext === MSG.emailtext) {
                         const receiveBoxMsgRef = ref(db, `MailClient/${useremailRef}/ReceiveBox/${key}`);
-                        remove(receiveBoxMsgRef);
+                        remove(receiveBoxMsgRef).then(() => {
+                            // Remove the message from the local state
+                            const updatedMessages = messages.filter((msg) => msg !== message);
+                            setMessages(updatedMessages);
+                        });
                     }
                 });
             }
         });
-    
+
         // Remove the message from StarMessages
         const starRef = ref(db, `MailClient/${useremailRef}/StarMessages`);
         onValue(starRef, (snapshot) => {
@@ -92,7 +98,7 @@ const Inbox = () => {
             }
         });
     };
-    
+
     return (
         <>
             <div className="ListDiv">
@@ -103,9 +109,15 @@ const Inbox = () => {
                             <p>From: {message.from}</p>
                             <p>Subject: {message.subject}</p>
                             <p>Message: {removeHTMLTags(message.emailtext)}</p>
-                            <div>
-                                <button onClick={() => StarMessage(message)} >Star</button>
-                                <button onClick={() => TrashMessage(message)}>Trash</button>
+                            <div className="BTNG">
+                                <button onClick={() => StarMessage(message)} className="STARB BTN">
+                                    <FontAwesomeIcon icon={faStar} size="sm" style={{ color: "#ffffff", }} />
+                                    <p>Star</p>
+                                </button>
+                                <button onClick={() => TrashMessage(message)} className="TRASHB BTN">
+                                    <FontAwesomeIcon icon={faTrashCan} size="sm" style={{color: "#ffffff",}} />
+                                    <p>Trash</p>
+                                </button>
                             </div>
                         </div>
                     ))}

@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {getDatabase, ref, push} from "firebase/database";
 import { useDispatch, useSelector } from "react-redux";
 import { clearFields, selectMail, setSubject, setEmailText, setTo } from "../../ReduxTK/MailSlice";
@@ -86,7 +88,10 @@ const Compose = () => {
                     <ReactQuill theme="snow" className="Editor" modules={modules} value={emailText} onChange={(value) => dispatch(setEmailText(value))} />
 
                     <div className="SUB">
-                        <button onClick={HandleSendMail} type="submit" className="SBTN">Send Mail</button>
+                        <button onClick={HandleSendMail} type="submit" className="SBTN">
+                            <p>Send Mail</p>
+                            <FontAwesomeIcon icon={faEnvelope} size="lg" style={{color: "#ffffff",}} />
+                        </button>
                     </div>
                 </form>
             </div>
