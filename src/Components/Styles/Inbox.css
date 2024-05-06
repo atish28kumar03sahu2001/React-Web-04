@@ -8,7 +8,7 @@
     text-wrap: wrap;
 }
 .LIST{
-    border: 2px solid white;
+    border: 2px solid rgb(255, 255, 255);
     margin: 10px;
     height: 500px;
     overflow: scroll;
